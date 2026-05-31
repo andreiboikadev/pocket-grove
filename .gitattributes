@@ -1,0 +1,31 @@
+# =============================================================
+#  Unity .gitattributes  (lean)
+#  - LF line endings for all text (clean diffs across machines)
+#  - Git LFS only for binary types this project actually uses
+#    -> add a line here ONLY when a new binary type really shows up
+# =============================================================
+
+# Force LF everywhere so Windows/macOS don't fight over line endings.
+* text=auto eol=lf
+
+# Nicer C# diffs
+*.cs diff=csharp
+
+# ---- Git LFS: binary assets ----
+# Textures
+*.png  filter=lfs diff=lfs merge=lfs -text
+*.jpg  filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.tga  filter=lfs diff=lfs merge=lfs -text
+*.psd  filter=lfs diff=lfs merge=lfs -text
+# 3D models (Blender -> Unity, glTF for AR runtime)
+*.fbx  filter=lfs diff=lfs merge=lfs -text
+*.glb  filter=lfs diff=lfs merge=lfs -text
+*.gltf filter=lfs diff=lfs merge=lfs -text
+# Audio
+*.wav  filter=lfs diff=lfs merge=lfs -text
+*.mp3  filter=lfs diff=lfs merge=lfs -text
+*.ogg  filter=lfs diff=lfs merge=lfs -text
+# Fonts
+*.ttf  filter=lfs diff=lfs merge=lfs -text
+*.otf  filter=lfs diff=lfs merge=lfs -text
