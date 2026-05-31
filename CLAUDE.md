@@ -33,6 +33,7 @@ Format:
 - **Types:** `feat` `fix` `chore` `build` `docs` `refactor` `test` `perf` `style` `ci`
 - **Scopes (typical here):** `ar` `mcp` `scene` `ui` `core` `deps` `build`
 - **Language:** English summary.
+- **Summary style:** relatively short but informative — name *what* changed (aim ~50 chars, hard max 72); add a body only for non-obvious *why*, otherwise omit it.
 - **Examples:**
   - `chore: initial project baseline (Unity 6.3 LTS, URP)`
   - `build(deps): add AR Foundation 6.x + ARCore XR plugin`
