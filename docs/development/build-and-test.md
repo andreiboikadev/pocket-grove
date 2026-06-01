@@ -66,9 +66,20 @@ rg -n "GameObject\.Find|FindWithTag|FindObjectOfType|FindObjectsOfType|FindAnyOb
 
 Any match in runtime code must be removed or justified in review.
 
+## Per-mechanic gate: regression + smoke (see [guardrails §17](../architecture/implementation-guardrails.md))
+
+Before a mechanic is "done":
+- **Regression:** run the **full** EditMode suite (command above) — all green; confirm earlier mechanics
+  still pass. For PlayMode, a fresh Unity process per run.
+- **Smoke (human-realistic):** drive the actual flow and read the Console — via the **MCP** Test Runner /
+  Play controls under **XR Simulation** for AR flows, and a **device** pass where tracking, camera, or
+  touch matter. Use MCP only where it can realistically drive the case.
+
 ## What "done" means / what can't be automated yet
 
-- **Logic done:** EditMode tests green + no Console errors.
+- **Mechanic done:** new pure rules have EditMode tests; the **full suite re-runs with no regression**;
+  a **smoke pass** in human-realistic conditions passed (MCP / XR Simulation, device where needed); no
+  Console errors.
 - **AR slice done in Editor:** placement works under XR Simulation.
 - **Demo-ready:** validated on a real ARCore phone (see the demo bar in the game-design doc) — this
   cannot be automated; it's a human device test.

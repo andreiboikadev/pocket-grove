@@ -784,6 +784,23 @@ Do not duplicate formulas across UI, gameplay, and result screens. Results shoul
 
 At minimum, write Edit Mode tests for pure gameplay logic.
 
+### Per-mechanic test gate (Definition of Done)
+
+Every gameplay mechanic is built test-alongside and is **not "done" until all three hold**:
+
+1. **Unit tests in the same change.** New or changed **pure rules** (score, timer, target selection,
+   bloom, spawn planning) ship with Edit Mode tests in the same commit. If a mechanic is *only* a thin
+   AR/UI adapter with no pure-rule logic, it has no unit tests by design (see Testability rules) and is
+   covered by the smoke/device pass below instead — but any testable rule it introduces must be tested.
+2. **Smoke test before completion.** Before calling a mechanic done, run a smoke pass in conditions as
+   close to real human use as practical: a Play Mode smoke test and/or an **MCP-driven** editor check
+   (enter Play, drive the actual flow, read the Console), under **XR Simulation** for AR flows, and on a
+   real device when the mechanic depends on real tracking, camera, or touch input. Use MCP where it can
+   realistically drive the flow; otherwise do a manual device pass. (MCP only where it fits the case.)
+3. **No regression.** Re-run the **full existing** Edit Mode suite plus the relevant Play Mode / smoke
+   checks and confirm earlier mechanics still pass and still behave as intended. A change that breaks an
+   earlier test is not done — fix it or revert before moving on.
+
 Required tests:
 
 - `TargetColorSelector` always changes to a color different from the current target (with 3 colors it never repeats back to back).
@@ -796,7 +813,7 @@ Required tests:
 - Wrong tap subtracts time and resets combo.
 - Empty tap has no penalty.
 
-Recommended Play Mode tests if time allows:
+Play Mode / smoke tests (the smoke pass in the gate above is required; author these as the slice grows):
 
 - App can transition MainMenu -> PlacementSearching -> GrovePreview -> Playing with mocked placement.
 - TrackingLost pauses timer.
@@ -912,12 +929,14 @@ During coding:
   - menu -> placement placeholder -> start round -> tap primitive motes -> results.
 - Keep classes small.
 - Move formulas and state transitions out of MonoBehaviours when practical.
-- Add tests as soon as pure rules exist.
+- Write unit tests **alongside each mechanic** (same change), not afterward.
 - Do not postpone all architecture until after the prototype works.
 
 Before handoff:
 
-- Run tests that exist.
+- Run the **full** Edit Mode suite — confirm **no regressions** (earlier mechanics still pass).
+- Do a **smoke pass in human-realistic conditions**: MCP-driven Play Mode and/or XR Simulation, and a
+  device pass where tracking/camera/touch matter.
 - Run restricted API search.
 - Review every singleton/static mutable field.
 - Verify there is no one-file GodObject.
@@ -958,6 +977,9 @@ Performance:
 Testing:
 
 - Are score/timer/target/spawn rules covered by Edit Mode tests?
+- Does each new or changed mechanic ship with unit tests in the **same change**?
+- Was the **full existing suite re-run with no regressions**?
+- Was the mechanic **smoke-tested in human-realistic conditions** (MCP / XR Simulation / device)?
 - Can a non-AR mock path drive the round logic?
 - Did the implementer test at least one win and one timeout path?
 

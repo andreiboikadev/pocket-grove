@@ -72,8 +72,10 @@ The human reviews the diff and commits.
 - Introduce a new abstraction only on its **second** real use. (C# style detail: `.claude/rules/unity-csharp.md`.)
 
 ## "Ready for review" =
-Compiles with no Console errors (checked via MCP), Project Validation passes, applicable EditMode/
-PlayMode tests pass, and — where applicable — XR Simulation (Editor) or a device check works.
+Compiles with no Console errors (checked via MCP) and Project Validation passes. **Per-mechanic test
+gate (guardrails §17):** new/changed pure rules have EditMode tests in the same change; the **full**
+suite re-runs with **no regressions**; and the mechanic had a **smoke pass in human-realistic
+conditions** (MCP-driven Play Mode / XR Simulation, device where tracking/camera/touch matter).
 
 ## End every session
 Update `docs/handoff/current-status.md`: outcome, files changed, checks run + results, decisions

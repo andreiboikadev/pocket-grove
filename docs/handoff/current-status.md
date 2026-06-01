@@ -1,13 +1,14 @@
 # Current Status
 
 Last updated: 2026-06-01
-Updated by: Claude Code (docs consolidation session)
+Updated by: Claude Code (docs consolidation + testing-gate session)
 Branch/context: local workspace (not yet committed — human reviews and commits)
 
 ## Current objective
 
-All project documentation now lives in-repo under `docs/` and is the single source of truth; the
-external concept docs were consolidated into the repo. Next: begin the gameplay vertical slice.
+All project documentation lives in-repo under `docs/` (single source of truth); external concept docs
+were consolidated in and then deleted from the parent folder. A per-mechanic testing/regression gate is
+now defined and mirrored across the rule layers. Next: begin the gameplay vertical slice.
 
 ## Status
 
@@ -21,6 +22,10 @@ external concept docs were consolidated into the repo. Next: begin the gameplay 
   `docs/product/game-design.md`, full guardrails → `docs/architecture/implementation-guardrails.md`,
   Claude-Code rules guide + documentation-system guide → `docs/reference/`. In-repo docs are now the
   single source of truth; the parent-folder copies are superseded.
+- **Testing gate (this session):** per-mechanic Definition of Done — unit tests in the same change
+  (pure rules), a smoke pass before done (MCP / XR Simulation / device, MCP where it fits), and a
+  no-regression re-run of the full suite. Defined in guardrails §17/§21/§22 and mirrored into
+  `CLAUDE.md` ("Ready for review"), `.claude/rules/unity-csharp.md`, and `build-and-test.md`.
 - **Not started:** all gameplay code. No scripts under `Assets/_Project/Scripts/` yet. No
   ScriptableObject configs, prefabs, or tests yet. No DI container (manual DI by ADR 0001).
 
@@ -30,6 +35,8 @@ external concept docs were consolidated into the repo. Next: begin the gameplay 
   full finalized versions (consolidated from external).
 - `docs/reference/claude-code-rules.md`, `docs/reference/documentation-system.md` — new (consolidated).
 - `docs/INDEX.md`, `CLAUDE.md` — updated for in-repo single source of truth.
+- Test gate: `docs/architecture/implementation-guardrails.md` (§17/§21/§22) + mirrors in `CLAUDE.md`,
+  `.claude/rules/unity-csharp.md`, `docs/development/build-and-test.md`.
 - Earlier this session: `.claude/settings.json`, `.claude/rules/*`, `README.md`, ADRs, build-and-test, asset-ledger.
 
 ## Checks run
@@ -43,8 +50,10 @@ external concept docs were consolidated into the repo. Next: begin the gameplay 
   URP, AR Foundation 6.5 + ARCore (Android), new Input System, MCP automation, **manual DI**, single
   scene, XR Simulation for Editor testing, pooling via `ObjectPool<T>`.
 - Documentation kept to a **lean bootstrap**; deferred docs are listed in `docs/INDEX.md`.
-- **In-repo docs are the single source of truth.** External parent-folder concept docs are superseded
-  and safe to delete; nothing in the repo depends on them.
+- **In-repo docs are the single source of truth.** The external parent-folder concept docs were
+  consolidated in and then **deleted** by the owner; nothing in the repo depends on them.
+- **Per-mechanic testing/regression gate is policy** (guardrails §17), mirrored into the always-on and
+  auto-loaded rule layers so it holds regardless of which doc a session opens.
 
 ## Blockers
 
@@ -62,7 +71,7 @@ external concept docs were consolidated into the repo. Next: begin the gameplay 
 
 ## Notes for next session
 
-Read `CLAUDE.md` + this file first. All docs are in-repo now — do not rely on the parent folder's
-external `.md` files (superseded; the human may delete them). Hard rules block all git writes (Bash and
-PowerShell) — propose a commit message, don't commit. Verify any AR API against the installed AR
-Foundation 6.5 package before relying on it.
+Read `CLAUDE.md` + this file first. All docs are in-repo (the external parent-folder `.md` files were
+deleted). Every mechanic follows the test gate (guardrails §17): unit tests in-change, smoke before
+done, no regression. Hard rules block all git writes (Bash and PowerShell) — propose a commit message,
+don't commit. Verify any AR API against the installed AR Foundation 6.5 package before relying on it.

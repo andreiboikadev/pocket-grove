@@ -72,8 +72,15 @@ PascalCase types/methods, camelCase fields.
 ## Tests
 
 Pure rule classes don't inherit `MonoBehaviour` and don't read `Time`/`Random`/scene objects directly
-(inject a clock and a seeded random). Add or extend EditMode tests when you change score, timer,
-target-selection, bloom, or spawn logic.
+(inject a clock and a seeded random).
+
+**Per-mechanic gate (Definition of Done) — full detail in [guardrails §17](../../docs/architecture/implementation-guardrails.md):**
+- **Unit tests in the same change** for new/changed pure rules (score, timer, target, bloom, spawn).
+  Adapter-only code with no pure-rule logic is covered by the smoke pass instead.
+- **Smoke before done:** a Play Mode and/or **MCP-driven** pass in human-realistic conditions
+  (XR Simulation for AR; device where tracking/camera/touch matter). MCP only where it fits.
+- **No regression:** re-run the full existing EditMode suite (+ relevant smoke) and confirm earlier
+  mechanics still pass before calling the work done.
 
 ## Size limits — refactor when crossed
 
